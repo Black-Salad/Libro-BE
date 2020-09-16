@@ -15,6 +15,7 @@ class Note(models.Model):
     note_viewcount = models.IntegerField()
     note_like = models.IntegerField(default=0)
     note_private = models.BooleanField(default=True)
+    note_state = models.BooleanField(default=True)
 
     class Meta:
         verbose_name: "note"
@@ -34,6 +35,7 @@ class Comment(models.Model):
     # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_contents = models.TextField()
     comment_date = models.DateTimeField(auto_now_add=True, blank=True)
+    comment_state = models.BooleanField(default=True)
 
     class Meta:
         db_table = "note_comment"
@@ -47,8 +49,9 @@ class Like(models.Model):
     like_id = models.AutoField(primary_key=True)
     note_id = models.IntegerField(default=0)
     # note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
-    like_user = models.CharField(max_length=200)
+    user_id = models.IntegerField(default=0)
     like_date = models.DateTimeField(auto_now_add=True, blank=True)
+    like_state = models.BooleanField(default=True)
 
     class Meta:
         db_table = "note_like"

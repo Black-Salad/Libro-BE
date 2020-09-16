@@ -9,6 +9,7 @@ class User(models.Model):
     user_name = models.CharField(max_length=200)
     user_introduction = models.TextField()
     user_crea_date = models.DateTimeField(auto_now_add=True, blank=True)
+    user_state = models.BooleanField(default=True)
 
     class Meta:
         db_table = "user"
