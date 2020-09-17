@@ -7,6 +7,8 @@ class Note(models.Model):
     note_id = models.AutoField(primary_key=True)
     user_id = models.IntegerField(default=0)
     book_id = models.IntegerField(default=0)
+    book_img = models.CharField(max_length=500, default="")
+    book_name = models.CharField(max_length=500, default="")
     # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     # book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
     note_title = models.CharField(max_length=200)
@@ -31,6 +33,7 @@ class Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
     note_id = models.IntegerField(default=0)
     user_id = models.IntegerField(default=0)
+    user_name = models.CharField(max_length=200, default="")
     # note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
     # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_contents = models.TextField()
@@ -39,7 +42,7 @@ class Comment(models.Model):
 
     class Meta:
         db_table = "note_comment"
-        ordering = ('-comment_date',)
+        ordering = ('comment_date',)
 
     def __str__(self):
         return self.comment_id
