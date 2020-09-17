@@ -7,8 +7,10 @@ from note.serializers import NoteSerializer, NoteCommentSerializer, NoteLikeSeri
 
 
 class NoteList(generics.ListCreateAPIView):
-    queryset = Note.objects.all()
+    queryset = Note.objects.filter(note_state=True)
     serializer_class = NoteSerializer
+    filter_backends = [filters.DjangoFilterBackend]
+    filter_fields = ['user_id']
 
 
 class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
