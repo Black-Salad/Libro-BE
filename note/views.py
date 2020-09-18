@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from rest_framework import generics, viewsets
-from django_filters import rest_framework as filters
+from rest_framework import generics, viewsets, filters
+from django_filters import rest_framework as filter
 
 from note.models import Note, Comment, Like
 from note.serializers import NoteSerializer, NoteCommentSerializer, NoteLikeSerializer
@@ -9,9 +9,15 @@ from note.serializers import NoteSerializer, NoteCommentSerializer, NoteLikeSeri
 class NoteList(generics.ListCreateAPIView):
     queryset = Note.objects.filter(note_state=True)
     serializer_class = NoteSerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['user_id']
-    filter_fields = ['note_private']
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['user_id', 'note_private']
+
+
+class NoteListSearch(generics.ListAPIView):
+    queryset = Note.objects.filter(note_state=True)
+    serializer_class = NoteSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['note_title', 'note_contents', 'book_name']
 
 
 class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -22,7 +28,7 @@ class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
 class NoteComment(generics.ListCreateAPIView):
     queryset = Comment.objects.filter(comment_state=True)
     serializer_class = NoteCommentSerializer
-    filter_backends = [filters.DjangoFilterBackend]
+    filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['note_id']
 
 
@@ -34,5 +40,10 @@ class NoteCommentDetail(generics.RetrieveUpdateDestroyAPIView):
 class NoteLike(generics.ListCreateAPIView):
     queryset = Like.objects.all()
     serializer_class = NoteLikeSerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['note_id']
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['note_id', 'user_id', 'like_state']
+
+
+class NoteLikeDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Like.objects.all()
+    serializer_class = NoteLikeSerializer
