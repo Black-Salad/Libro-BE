@@ -19,20 +19,15 @@ class User(models.Model):
         return self.user_id
 
 
-class Shelf(models.Model):
-    shelf_id = models.AutoField(primary_key=True)
-    user_id = models.IntegerField(default=0)
-    book_id = models.IntegerField(default=0)
-    # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    # book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
-    shelf_state = models.CharField(max_length=1)
-    shelf_startdate = models.CharField(max_length=200, blank=True)
-    shelf_enddate = models.CharField(max_length=200, blank=True)
-    shelf_star = models.BooleanField(default=True)
+class Follow(models.Model):
+    follow_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    target_user_id = models.IntegerField(null=False)
+    follow_dt = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:
-        db_table = "user_shelf"
-        ordering = ('-shelf_id',)
+        db_table = "follow"
+        ordering = ('-follow_dt',)
 
     def __str__(self):
-        return self.shelf_id
+        return self.follow_id

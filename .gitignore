@@ -1,6 +1,8 @@
 /note/migrations
 /user/migrations
+/bookshelf/migrations
 
 /note/__pycache__
 /user/__pycache__
+/bookshelf/__pycache__
 /LibroDjango/__pycache__
