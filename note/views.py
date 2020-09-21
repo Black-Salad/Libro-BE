@@ -41,7 +41,7 @@ class NoteLike(generics.ListCreateAPIView):
     queryset = Like.objects.all()
     serializer_class = NoteLikeSerializer
     filter_backends = [filter.DjangoFilterBackend]
-    filter_fields = ['note_id', 'user_id', 'like_state']
+    filter_fields = ['note_id', 'user_id']
 
 
 class NoteLikeDetail(generics.RetrieveUpdateDestroyAPIView):
