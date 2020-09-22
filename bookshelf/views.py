@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, viewsets
 from django_filters import rest_framework as filter
 from .models import Book, Shelf, BookStar
-from .serializers import BookSerializer, ShelfSerializer, BookStarSerializer, BookShelfSerializer
+from .serializers import BookSerializer, ShelfSerializer, BookStarSerializer, BookShelfJoinSerializer
 
 
 class BookList(generics.ListCreateAPIView):
