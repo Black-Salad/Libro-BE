@@ -21,8 +21,10 @@ class User(models.Model):
 
 class Follow(models.Model):
     follow_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    target_user_id = models.IntegerField(null=False)
+    user_id = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="following")
+    target_user_id = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="followed")
     follow_dt = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:

@@ -57,7 +57,7 @@ class Like(models.Model):
     # note_id = models.IntegerField(default=0)
     # user_id = models.IntegerField(default=0)
     like_date = models.DateTimeField(auto_now_add=True, blank=True)
-    # like_state = models.BooleanField(default=True)
+    like_state = models.BooleanField(default=True)
 
     class Meta:
         db_table = "note_like"
