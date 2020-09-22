@@ -6,17 +6,17 @@ from bookshelf.models import Book
 
 class Note(models.Model):
     note_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    book_id = models.ForeignKey(Book, on_delete=models.PROTECT)
-    # user_id = models.IntegerField(default=0)
-    # book_id = models.IntegerField(default=0)
+    # user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    # book_id = models.ForeignKey(Book, on_delete=models.PROTECT)
+    user_id = models.IntegerField(default=0)
+    book_id = models.IntegerField(default=0)
     book_img = models.CharField(max_length=500, default="")
-    book_name = models.CharField(max_length=500, default="")
+    book_title = models.CharField(max_length=500, default="")
     note_title = models.CharField(max_length=200)
     note_contents = models.TextField()
     note_date = models.DateTimeField(auto_now_add=True)
     note_viewcount = models.IntegerField()
-    note_like = models.IntegerField(default=0)
+    # note_like = models.IntegerField(default=0)
     note_private = models.BooleanField(default=True)
     note_state = models.BooleanField(default=True)
 
@@ -32,10 +32,10 @@ class Note(models.Model):
 
 class Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
-    note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    # note_id = models.IntegerField(default=0)
-    # user_id = models.IntegerField(default=0)
+    # note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
+    # user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    note_id = models.IntegerField(default=0)
+    user_id = models.IntegerField(default=0)
     user_name = models.CharField(max_length=200, default="")
     comment_contents = models.TextField()
     # 글자수 제한 두는 게 좋을 듯
@@ -52,10 +52,10 @@ class Comment(models.Model):
 
 class Like(models.Model):
     like_id = models.AutoField(primary_key=True)
-    note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    # note_id = models.IntegerField(default=0)
-    # user_id = models.IntegerField(default=0)
+    # note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
+    # user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    note_id = models.IntegerField(default=0)
+    user_id = models.IntegerField(default=0)
     like_date = models.DateTimeField(auto_now_add=True, blank=True)
     like_state = models.BooleanField(default=True)
 

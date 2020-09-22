@@ -18,3 +18,13 @@ class BookStarSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookStar
         fields = '__all__'
+
+
+class BookShelfJoinSerializer(serializers.ModelSerializer):
+
+    book_id = BookSerializer(read_only=True)
+
+    class Meta:
+        model = Shelf
+        fields = ['user_id', 'book_id',
+                  'shelf_state', 'start_date', 'end_date']
