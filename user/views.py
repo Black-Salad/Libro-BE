@@ -11,6 +11,8 @@ from .serializers import UserSerializer
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['user_email', 'user_state']
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):

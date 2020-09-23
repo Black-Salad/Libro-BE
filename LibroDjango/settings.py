@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -137,3 +137,6 @@ STATIC_URL = '/static/'
 
 # 모든 호스트 허용
 CORS_ORIGIN_ALLOW_ALL = True
+
+MEDIA_URL = '/img/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "img")

@@ -22,6 +22,9 @@ from drf_yasg import openapi
 
 from rest_framework.authtoken import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Libro API",
@@ -47,3 +50,7 @@ urlpatterns = [
     path('api/user/', include('user.urls')),
     path('api/book/', include('bookshelf.urls'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
