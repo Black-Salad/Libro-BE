@@ -10,14 +10,15 @@ class NoteList(generics.ListCreateAPIView):
     queryset = Note.objects.filter(note_state=True)
     serializer_class = NoteSerializer
     filter_backends = [filter.DjangoFilterBackend]
-    filter_fields = ['user_id', 'note_private']
+    filter_fields = ['user_id', 'note_private', 'book_id']
 
 
 class NoteListSearch(generics.ListAPIView):
     queryset = Note.objects.filter(note_state=True)
     serializer_class = NoteSerializer
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, filter.DjangoFilterBackend]
     search_fields = ['note_title', 'note_contents', 'book_title']
+    filter_fields = ['user_id']
 
 
 class NoteDetail(generics.RetrieveUpdateDestroyAPIView):

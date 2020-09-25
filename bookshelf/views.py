@@ -8,6 +8,8 @@ from .serializers import BookSerializer, ShelfSerializer, BookStarSerializer, Bo
 class BookList(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['book_isbn']
 
 
 class BookDetail(generics.RetrieveUpdateDestroyAPIView):
