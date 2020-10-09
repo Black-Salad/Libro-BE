@@ -16,7 +16,7 @@ class User(models.Model):
         ordering = ('-user_crea_date',)
 
     def __str__(self):
-        return self.user_id
+        return str(self.user_id)
 
 
 class Follow(models.Model):
