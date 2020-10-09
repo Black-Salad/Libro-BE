@@ -6,10 +6,10 @@ from bookshelf.models import Book
 
 class Note(models.Model):
     note_id = models.AutoField(primary_key=True)
-    # user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    # book_id = models.ForeignKey(Book, on_delete=models.PROTECT)
-    user_id = models.IntegerField(default=0)
-    book_id = models.IntegerField(default=0)
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    book_id = models.ForeignKey(Book, on_delete=models.PROTECT)
+    # user_id = models.IntegerField(default=0)
+    # book_id = models.IntegerField(default=0)
     book_img = models.CharField(max_length=500, default="")
     book_title = models.CharField(max_length=500, default="")
     note_title = models.CharField(max_length=200)
@@ -32,11 +32,12 @@ class Note(models.Model):
 
 class Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
-    # note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
-    # user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    note_id = models.IntegerField(default=0)
-    user_id = models.IntegerField(default=0)
-    user_name = models.CharField(max_length=200, default="")
+    note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    user_img = models.FileField(default="user.svg")
+    # note_id = models.IntegerField(default=0)
+    # user_id = models.IntegerField(default=0)
+    user_name = models.CharField(max_length=200, default="user.svg")
     comment_contents = models.TextField()
     # 글자수 제한 두는 게 좋을 듯
     comment_date = models.DateTimeField(auto_now_add=True, blank=True)

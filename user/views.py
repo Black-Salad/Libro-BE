@@ -2,15 +2,20 @@ from django.shortcuts import render
 from rest_framework import generics, viewsets
 from django_filters import rest_framework as filter
 
-# from .models import User, Shelf
-# from .serializers import UserSerializer, UserShelfSerializer
-from .models import User
-from .serializers import UserSerializer
+from .models import User, Follow
+from .serializers import UserSerializer, FollowSerializer
+
+from rest_framework.parsers import FileUploadParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['user_email', 'user_state', 'user_name']
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -18,8 +23,28 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
 
-# class UserShelf(generics.ListCreateAPIView):
-#     queryset = Shelf.objects.all()
-#     serializer_class = UserShelfSerializer
-#     filter_backends = [filter.DjangoFilterBackend]
-#     filter_fields = ['shelf_state']
+class UserUpdate(generics.RetrieveUpdateDestroyAPIView):
+    parser_class = (FileUploadParser,)
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        file_serializer = UserSerializer(data=request.data)
+
+        if file_serializer.is_valid():
+            file_serializer.save()
+            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FollowList(generics.ListCreateAPIView):
+    queryset = Follow.objects.all()
+    serializer_class = FollowSerializer
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['user_id', 'target_user_id']
+
+
+class FollowDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Follow.objects.all()
+    serializer_class = FollowSerializer
