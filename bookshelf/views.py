@@ -57,7 +57,7 @@ class StarDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class BookShelfJoinList(generics.ListCreateAPIView):  # 책꽂이 조회 시
-    queryset = Shelf.objects.all().order_by('-start_date')
+    queryset = Shelf.objects.all().order_by('-start_date', 'end_date')
     serializer_class = BookShelfJoinSerializer
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_id', 'shelf_state']
