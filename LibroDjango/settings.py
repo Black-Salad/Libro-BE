@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'note',
     'user',
     'bookshelf',
+    'timeline',
     'rest_framework',
     'drf_yasg',
     'corsheaders',
