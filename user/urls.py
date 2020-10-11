@@ -8,4 +8,7 @@ urlpatterns = [
     path('<int:pk>/update/', views.UserUpdate.as_view()),
     path('follow/', views.FollowList.as_view()),
     path('follow/<int:pk>/', views.FollowDetail.as_view()),
+    path('follow/join/', views.UserFollowJoinList.as_view()),
+    path('alarm/', views.AlarmList.as_view()),
+    path('alarm/join/', views.UserAlarmJoinList.as_view())
 ]

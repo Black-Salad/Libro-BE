@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics, viewsets
 from django_filters import rest_framework as filter
 
-from .models import User, Follow
-from .serializers import UserSerializer, FollowSerializer
+from .models import User, Follow, Alarm
+from .serializers import UserSerializer, FollowSerializer, UserFollowJoinSerializer, AlarmSerializer, UserAlarmJoinSerializer
 
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
@@ -48,3 +48,22 @@ class FollowList(generics.ListCreateAPIView):
 class FollowDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
+
+
+class UserFollowJoinList(generics.ListCreateAPIView):
+    queryset = Follow.objects.all()
+    serializer_class = UserFollowJoinSerializer
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['user_id']
+
+
+class AlarmList(generics.ListCreateAPIView):
+    queryset = Alarm.objects.all()
+    serializer_class = AlarmSerializer
+
+
+class UserAlarmJoinList(generics.ListCreateAPIView):
+    queryset = Alarm.objects.all()
+    serializer_class = UserAlarmJoinSerializer
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['target_user_id', 'alarm_state']

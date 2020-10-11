@@ -18,7 +18,7 @@ class NoteListSearch(generics.ListAPIView):
     serializer_class = NoteSerializer
     filter_backends = [filters.SearchFilter, filter.DjangoFilterBackend]
     search_fields = ['note_title', 'note_contents', 'book_title']
-    filter_fields = ['user_id']
+    filter_fields = ['user_id', 'note_private']
 
 
 class NoteDetail(generics.RetrieveUpdateDestroyAPIView):

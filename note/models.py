@@ -34,7 +34,7 @@ class Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
     note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    user_img = models.FileField(default="user.svg")
+    user_img = models.TextField(default="")
     # note_id = models.IntegerField(default=0)
     # user_id = models.IntegerField(default=0)
     user_name = models.CharField(max_length=200, default="user.svg")
@@ -53,10 +53,10 @@ class Comment(models.Model):
 
 class Like(models.Model):
     like_id = models.AutoField(primary_key=True)
-    # note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
-    # user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    note_id = models.IntegerField(default=0)
-    user_id = models.IntegerField(default=0)
+    note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    # note_id = models.IntegerField(default=0)
+    # user_id = models.IntegerField(default=0)
     like_date = models.DateTimeField(auto_now_add=True, blank=True)
     # like_state = models.BooleanField(default=True)
 
