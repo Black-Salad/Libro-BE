@@ -15,6 +15,7 @@ class Book(models.Model):
     book_desc = models.TextField(null=True, blank=True)  # 책 description
     book_url = models.CharField(max_length=500, default="")  # 책 상세 url
     book_isbn = models.CharField(max_length=500, default="")
+    book_star_cnt = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return '{} {}'.format(self.book_title, self.book_id)

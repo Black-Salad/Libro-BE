@@ -4,6 +4,9 @@ from rest_framework import generics, viewsets
 from django_filters import rest_framework as filter
 from .models import Book, Shelf, BookStar
 from .serializers import BookSerializer, ShelfSerializer, StarSerializer, BookShelfJoinSerializer, BookStarJoinSerializer
+from django.db.models import F
+# ...
+# MyModel.objects.filter(id=...).update(hit_count=F('hit_count')+1)
 
 
 class BookList(generics.ListCreateAPIView):

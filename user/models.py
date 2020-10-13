@@ -34,7 +34,7 @@ class Follow(models.Model):
         ordering = ('-follow_date',)
 
     def __str__(self):
-        return self.follow_id
+        return str(self.follow_id)
 
 
 class Alarm(models.Model):

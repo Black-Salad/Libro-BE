@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from user.models import User, Follow
 from bookshelf.models import Shelf, BookStar
-from note.models import Note, Like
+from note.models import Note, Like, Comment
 import datetime
 
 
@@ -15,6 +15,8 @@ class Timeline(models.Model):
     star_id = models.ForeignKey(BookStar, on_delete=models.CASCADE, null=True)
     note_id = models.ForeignKey(Note, on_delete=models.CASCADE, null=True)
     like_id = models.ForeignKey(Like, on_delete=models.CASCADE, null=True)
+    comment_id = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, null=True)
     follow_id = models.ForeignKey(Follow, on_delete=models.CASCADE, null=True)
     tl_state = models.BooleanField(default=True)
     tl_add_date = models.DateTimeField(auto_now_add=True)
