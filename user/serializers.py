@@ -22,13 +22,12 @@ class AlarmSerializer(serializers.ModelSerializer):
 
 
 class UserFollowJoinSerializer(serializers.ModelSerializer):
-
+    user_id = UserSerializer(read_only=True)
     target_user_id = UserSerializer(read_only=True)
 
     class Meta:
         model = Follow
-        fields = ['target_user_id', 'follow_id',
-                  'user_id', 'follow_date']
+        fields = '__all__'
 
 
 class UserAlarmJoinSerializer(serializers.ModelSerializer):

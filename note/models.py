@@ -37,7 +37,7 @@ class Comment(models.Model):
     user_img = models.TextField(default="")
     # note_id = models.IntegerField(default=0)
     # user_id = models.IntegerField(default=0)
-    user_name = models.CharField(max_length=200, default="user.svg")
+    # user_name = models.CharField(max_length=200, default="user.svg")
     comment_contents = models.TextField()
     # 글자수 제한 두는 게 좋을 듯
     comment_date = models.DateTimeField(auto_now_add=True, blank=True)
