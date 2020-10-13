@@ -54,10 +54,15 @@ class UserFollowJoinList(generics.ListCreateAPIView):
     queryset = Follow.objects.all()
     serializer_class = UserFollowJoinSerializer
     filter_backends = [filter.DjangoFilterBackend]
-    filter_fields = ['user_id']
+    filter_fields = ['user_id', 'target_user_id']
 
 
 class AlarmList(generics.ListCreateAPIView):
+    queryset = Alarm.objects.all()
+    serializer_class = AlarmSerializer
+
+
+class AlarmDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Alarm.objects.all()
     serializer_class = AlarmSerializer
 

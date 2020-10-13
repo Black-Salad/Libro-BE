@@ -42,7 +42,8 @@ class Alarm(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     target_user_id = models.IntegerField(null=False)
     # note_id = models.IntegerField(default=0)
-    note_id = models.ForeignKey("note.Note", on_delete=models.CASCADE)
+    note_id = models.ForeignKey(
+        "note.Note", on_delete=models.CASCADE, null=True)
     # https://jupiny.com/2016/10/23/models-circular-import-dependencies/
     alarm_type = models.IntegerField(default=0)
     alarm_state = models.BooleanField(default=True)
