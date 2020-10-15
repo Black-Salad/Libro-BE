@@ -3,7 +3,8 @@ from rest_framework import generics, viewsets, filters
 from django_filters import rest_framework as filter
 
 from note.models import Note, Comment, Like
-from note.serializers import NoteSerializer, NoteCommentSerializer, NoteLikeSerializer
+from note.serializers import NoteSerializer, NoteCommentSerializer, NoteLikeSerializer, NoteCommentUserjoinSerializer, NoteLikeJoinSerializer
+from django.db.models import Count, Subquery
 
 
 class NoteList(generics.ListCreateAPIView):
@@ -33,6 +34,13 @@ class NoteComment(generics.ListCreateAPIView):
     filter_fields = ['note_id']
 
 
+class NoteCommentUser(generics.ListCreateAPIView):
+    queryset = Comment.objects.filter(comment_state=True)
+    serializer_class = NoteCommentUserjoinSerializer
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['note_id']
+
+
 class NoteCommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = NoteCommentSerializer
@@ -48,3 +56,18 @@ class NoteLike(generics.ListCreateAPIView):
 class NoteLikeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Like.objects.all()
     serializer_class = NoteLikeSerializer
+
+
+class NoteLikeJoin(generics.ListAPIView):
+    # queryset = Like.objects.values('note_id').annotate(
+    #     cnt=Count('note_id')).order_by('-cnt')
+    queryset = Like.objects.values('note_id').annotate(
+        cnt=Count('note_id')).order_by('-cnt')
+    serializer_class = NoteLikeJoinSerializer
+
+    # def get_queryset(self):
+    #     like = Like.objects.all()
+    #     note = Note.objects.all()
+    #     queryset = Timeline.objects.filter(user_id__in=target_users).filter(
+    #         tl_state=True).order_by('-tl_add_date')
+    #     return queryset
