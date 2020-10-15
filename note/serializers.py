@@ -9,8 +9,6 @@ class NoteSerializer(serializers.ModelSerializer):
 
 
 class NoteCommentSerializer(serializers.ModelSerializer):
-    from user.serializers import UserSerializer
-    user_id = UserSerializer(read_only=True)
 
     class Meta:
         model = Comment
@@ -38,4 +36,22 @@ class NoteLikeJoinSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Like
+        fields = '__all__'
+
+
+class CommentNoteJoinSerializer(serializers.ModelSerializer):
+
+    note_id = NoteUserSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
+
+class NoteBookJoinSerializer(serializers.ModelSerializer):
+    from bookshelf.serializers import BookSerializer
+    book_id = BookSerializer(read_only=True)
+
+    class Meta:
+        model = Note
         fields = '__all__'

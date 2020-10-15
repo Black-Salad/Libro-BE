@@ -10,4 +10,5 @@ urlpatterns = [
     path('comment/<int:pk>/', views.NoteCommentDetail.as_view()),
     path('like/', views.NoteLike.as_view()),
     path('like/<int:pk>/', views.NoteLikeDetail.as_view()),
+    path('list/', views.NoteUserList.as_view()),
 ]

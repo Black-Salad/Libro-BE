@@ -3,12 +3,19 @@ from rest_framework import generics, viewsets, filters
 from django_filters import rest_framework as filter
 
 from note.models import Note, Comment, Like
-from note.serializers import NoteSerializer, NoteCommentSerializer, NoteLikeSerializer
+from note.serializers import NoteSerializer, NoteUserSerializer, NoteSerializer, NoteCommentSerializer, NoteLikeSerializer
 
 
 class NoteList(generics.ListCreateAPIView):
     queryset = Note.objects.filter(note_state=True)
     serializer_class = NoteSerializer
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['user_id', 'note_private', 'book_id']
+
+
+class NoteUserList(generics.ListCreateAPIView):
+    queryset = Note.objects.filter(note_state=True)
+    serializer_class = NoteUserSerializer
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_id', 'note_private', 'book_id']
 
