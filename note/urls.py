@@ -7,8 +7,10 @@ urlpatterns = [
     path('<int:pk>/', views.NoteDetail.as_view()),
     path('search/', views.NoteListSearch.as_view()),
     path('comment/', views.NoteComment.as_view()),
+    path('comment/userjoin/', views.NoteCommentUser.as_view()),
     path('comment/<int:pk>/', views.NoteCommentDetail.as_view()),
     path('like/', views.NoteLike.as_view()),
     path('like/<int:pk>/', views.NoteLikeDetail.as_view()),
     path('list/', views.NoteUserList.as_view()),
+    path('like/count/', views.NoteLikeJoin.as_view())
 ]

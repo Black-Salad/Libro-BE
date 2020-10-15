@@ -34,7 +34,7 @@ class Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
     note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    user_img = models.TextField(default="")
+    # user_img = models.TextField(default="")
     # note_id = models.IntegerField(default=0)
     # user_id = models.IntegerField(default=0)
     # user_name = models.CharField(max_length=200, default="user.svg")
