@@ -67,5 +67,5 @@ class NoteLikeDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class NoteLikeJoin(generics.ListAPIView):
     queryset = Like.objects.values('note_id').annotate(
-        cnt=Count('note_id')).order_by('-cnt')
+        cnt=Count('note_id')).order_by('-cnt')[:4]
     serializer_class = NoteLikeCountSerializer

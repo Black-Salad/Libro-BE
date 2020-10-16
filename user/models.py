@@ -9,7 +9,7 @@ class User(models.Model):
     user_pw = models.CharField(max_length=200)
     user_name = models.CharField(max_length=200)
     user_img = models.FileField(default="user.svg")
-    user_introduction = models.TextField(default="")
+    user_introduction = models.TextField(default="", null=True, blank=True)
     user_crea_date = models.DateTimeField(auto_now=True, blank=True)
     user_state = models.BooleanField(default=True)
 
