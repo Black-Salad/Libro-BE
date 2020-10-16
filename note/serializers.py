@@ -30,6 +30,16 @@ class NoteLikeSerializer(serializers.ModelSerializer):
 
 
 class NoteLikeJoinSerializer(serializers.ModelSerializer):
+    note_id = NoteSerializer(read_only=True)
+    # note_id = serializers.IntegerField(read_only=True)
+    # user_id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Like
+        fields = '__all__'
+
+
+class NoteLikeCountSerializer(serializers.ModelSerializer):
     # note_id = NoteSerializer(read_only=True)
     note_id = serializers.IntegerField(read_only=True)
     user_id = serializers.IntegerField(read_only=True)

@@ -10,7 +10,8 @@ class Note(models.Model):
     book_id = models.ForeignKey(Book, on_delete=models.PROTECT)
     # user_id = models.IntegerField(default=0)
     # book_id = models.IntegerField(default=0)
-    book_img = models.CharField(max_length=500, default="")
+    book_img = models.CharField(
+        max_length=500, default="", null=True, blank=True)
     book_title = models.CharField(max_length=500, default="")
     note_title = models.CharField(max_length=200)
     note_contents = models.TextField()

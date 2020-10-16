@@ -3,7 +3,7 @@ from rest_framework import generics, viewsets, filters
 from django_filters import rest_framework as filter
 
 from note.models import Note, Comment, Like
-from note.serializers import NoteSerializer, NoteUserSerializer, NoteCommentSerializer, NoteLikeSerializer, NoteCommentUserjoinSerializer, NoteLikeJoinSerializer
+from note.serializers import NoteSerializer, NoteUserSerializer, NoteCommentSerializer, NoteLikeSerializer, NoteCommentUserjoinSerializer, NoteLikeJoinSerializer, NoteLikeCountSerializer
 from django.db.models import Count, Subquery
 
 
@@ -66,15 +66,6 @@ class NoteLikeDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class NoteLikeJoin(generics.ListAPIView):
-    # queryset = Like.objects.values('note_id').annotate(
-    #     cnt=Count('note_id')).order_by('-cnt')
     queryset = Like.objects.values('note_id').annotate(
         cnt=Count('note_id')).order_by('-cnt')
-    serializer_class = NoteLikeJoinSerializer
-
-    # def get_queryset(self):
-    #     like = Like.objects.all()
-    #     note = Note.objects.all()
-    #     queryset = Timeline.objects.filter(user_id__in=target_users).filter(
-    #         tl_state=True).order_by('-tl_add_date')
-    #     return queryset
+    serializer_class = NoteLikeCountSerializer
