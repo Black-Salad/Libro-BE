@@ -5,11 +5,19 @@ from django_filters import rest_framework as filter
 from note.models import Note, Comment, Like
 from note.serializers import NoteSerializer, NoteUserSerializer, NoteCommentSerializer, NoteLikeSerializer, NoteCommentUserjoinSerializer, NoteLikeJoinSerializer, NoteLikeCountSerializer
 from django.db.models import Count, Subquery
+from rest_framework.pagination import PageNumberPagination
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 12
+    page_query_param = 'page_size'
+    max_page_size = 100
 
 
 class NoteList(generics.ListCreateAPIView):
     queryset = Note.objects.filter(note_state=True)
     serializer_class = NoteSerializer
+    pagination_class = StandardResultsSetPagination
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_id', 'note_private', 'book_id']
 
@@ -17,6 +25,7 @@ class NoteList(generics.ListCreateAPIView):
 class NoteUserList(generics.ListCreateAPIView):
     queryset = Note.objects.filter(note_state=True)
     serializer_class = NoteUserSerializer
+    pagination_class = StandardResultsSetPagination
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_id', 'note_private', 'book_id']
 
@@ -24,6 +33,7 @@ class NoteUserList(generics.ListCreateAPIView):
 class NoteListSearch(generics.ListAPIView):
     queryset = Note.objects.filter(note_state=True)
     serializer_class = NoteSerializer
+    pagination_class = StandardResultsSetPagination
     filter_backends = [filters.SearchFilter, filter.DjangoFilterBackend]
     search_fields = ['note_title', 'note_contents', 'book_title']
     filter_fields = ['user_id', 'note_private']

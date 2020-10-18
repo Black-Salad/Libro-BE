@@ -7,6 +7,13 @@ from .serializers import BookSerializer, ShelfSerializer, StarSerializer, BookSh
 from django.db.models import F
 # ...
 # MyModel.objects.filter(id=...).update(hit_count=F('hit_count')+1)
+from rest_framework.pagination import PageNumberPagination
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 6
+    page_query_param = 'page_size'
+    max_page_size = 100
 
 
 class BookList(generics.ListCreateAPIView):
@@ -60,8 +67,9 @@ class StarDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class BookShelfJoinList(generics.ListCreateAPIView):  # 책꽂이 조회 시
-    queryset = Shelf.objects.all().order_by('-start_date', 'end_date')
+    queryset = Shelf.objects.all().order_by('-start_date', '-end_date')
     serializer_class = BookShelfJoinSerializer
+    pagination_class = StandardResultsSetPagination
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_id', 'shelf_state']
 
@@ -69,5 +77,27 @@ class BookShelfJoinList(generics.ListCreateAPIView):  # 책꽂이 조회 시
 class BookStarJoinList(generics.ListCreateAPIView):  # 책꽂이 조회 시
     queryset = BookStar.objects.all().order_by('-star_add_date')
     serializer_class = BookStarJoinSerializer
+    pagination_class = StandardResultsSetPagination
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_id']
+
+
+class BookShelfDateFilterList(generics.ListAPIView):  # 읽은 책 기간별 조회
+    queryset = Shelf.objects.all().order_by('-end_date')
+    serializer_class = BookShelfJoinSerializer
+    # pagination_class = StandardResultsSetPagination
+    filter_backends = [filter.DjangoFilterBackend]
+    filterset_fields = {
+        'start_date': ['gte'],
+        'end_date': ['lte'],
+        'user_id': ['exact'],
+        'shelf_state': ['exact'],
+    }
+
+
+# 페이징 없이 모두 조회 (독서록 쓰기에 책 불러오기)
+class BookShelfJoinList2 (generics.ListCreateAPIView):
+    queryset = Shelf.objects.all().order_by('-start_date', '-end_date')
+    serializer_class = BookShelfJoinSerializer
+    filter_backends = [filter.DjangoFilterBackend]
+    filter_fields = ['user_id', 'shelf_state']

@@ -90,7 +90,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '1234',
         'HOST': '127.0.0.1',
-        'PORT': '3307',
+        'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         }
@@ -116,6 +116,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# pagination
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 12
+
+}
+
+# AUTH_USER_MODEL = 'user.User';
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

@@ -4,6 +4,13 @@ from django_filters import rest_framework as filter
 from .models import Timeline
 from user.models import Follow
 from .serializers import TimelineSerializer, TimelineJoinSerializer
+from rest_framework.pagination import PageNumberPagination
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_query_param = 'page_size'
+    max_page_size = 100
 
 
 class TimelineList(generics.ListCreateAPIView):  # 타임라인 추가할 때
@@ -13,6 +20,7 @@ class TimelineList(generics.ListCreateAPIView):  # 타임라인 추가할 때
 
 class UserTimelineGetList(generics.ListCreateAPIView):  # 타임라인 불러올 때
     serializer_class = TimelineJoinSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         user = self.request.query_params.get('user', None)
