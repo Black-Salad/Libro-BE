@@ -97,7 +97,7 @@ class NoteLikeJoin(generics.ListAPIView):
         a_month_ago = datetime.now() - timedelta(weeks=4)  # 한달전
 
         tmp = list(Like.objects.filter(like_date__gte=a_month_ago).filter(like_date__lte=today).values(
-            'note_id').annotate(cnt=Count('note_id')).order_by('-cnt').values_list('note_id', flat=True))
+            'note_id').annotate(cnt=Count('note_id')).order_by('-cnt')[:4].values_list('note_id', flat=True))
         queryset = Note.objects.filter(note_id__in=tmp).filter(
-            note_state=True).filter(note_private=True)[:4]
+            note_state=True).filter(note_private=True)
         return queryset
