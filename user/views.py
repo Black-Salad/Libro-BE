@@ -35,7 +35,7 @@ class RecommentUserList(generics.ListAPIView):  # 팔로우 추천 (로그인유
         target_users = list(Follow.objects.filter(user_id=user).values_list(
             'target_user_id', flat=True))
         queryset = User.objects.exclude(user_id__in=target_users).exclude(user_id=user).filter(
-            user_state=True).order_by('-user_crea_date')[:8]
+            user_state=True).order_by('?')[:8]
         return queryset
 
 
