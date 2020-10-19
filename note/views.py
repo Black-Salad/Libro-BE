@@ -74,8 +74,22 @@ class NoteLikeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Like.objects.all()
     serializer_class = NoteLikeSerializer
 
+# 좋아요 많은 독서록
+
 
 class NoteLikeJoin(generics.ListAPIView):
-    queryset = Like.objects.values('note_id').annotate(
-        cnt=Count('note_id')).order_by('-cnt')[:4]
-    serializer_class = NoteLikeCountSerializer
+    serializer_class = NoteSerializer
+
+    # queryset = Like.objects.values('note_id').annotate(
+    #     cnt=Count('note_id')).order_by('-cnt')[:4]
+
+    def get_queryset(self):
+        from datetime import datetime, timedelta
+        today = datetime.now()
+        a_month_ago = datetime.now() - timedelta(weeks=4)  # 한달전
+
+        tmp = list(Like.objects.filter(like_date__gte=a_month_ago).filter(like_date__lte=today).values(
+            'note_id').annotate(cnt=Count('note_id')).order_by('-cnt').values_list('note_id', flat=True))
+        queryset = Note.objects.filter(note_id__in=tmp).filter(
+            note_state=True).filter(note_private=True)[:4]
+        return queryset
