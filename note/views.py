@@ -3,7 +3,7 @@ from rest_framework import generics, viewsets, filters
 from django_filters import rest_framework as filter
 
 from note.models import Note, Comment, Like
-from note.serializers import NoteSerializer, NoteUserSerializer, NoteCommentSerializer, NoteLikeSerializer, NoteCommentUserjoinSerializer, NoteLikeJoinSerializer, NoteLikeCountSerializer
+from note.serializers import NoteSerializer, NoteUserSerializer, NoteCommentSerializer, NoteLikeSerializer, NoteCommentUserjoinSerializer, NoteLikeJoinSerializer, NoteLikeCountSerializer, NoteBookJoinSerializer
 from django.db.models import Count, Subquery
 from rest_framework.pagination import PageNumberPagination
 
@@ -42,6 +42,14 @@ class NoteListSearch(generics.ListAPIView):
 class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
+
+
+# NoteDetail 조회용 (book join)
+class NoteDetailBookJoin(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteBookJoinSerializer
+    # filter_backends = [filter.DjangoFilterBackend]
+    # filter_fields = ['note_id']
 
 
 class NoteComment(generics.ListCreateAPIView):
