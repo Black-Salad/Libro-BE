@@ -101,3 +101,19 @@ class BookShelfJoinList2 (generics.ListCreateAPIView):
     serializer_class = BookShelfJoinSerializer
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_id', 'shelf_state']
+
+# 관심 많은 책
+
+
+class StarOrderedBooks (generics.ListAPIView):
+    serializer_class = BookSerializer
+
+    def get_queryset(self):
+        from datetime import datetime, timedelta
+        today = datetime.now()
+        a_month_ago = datetime.now() - timedelta(weeks=4)  # 한달전
+
+        tmp = list(BookStar.objects.filter(star_add_date__gte=a_month_ago).filter(star_add_date__lte=today).values(
+            'book_id').annotate(cnt=Count('book_id')).order_by('-cnt')[:6].values_list('book_id', flat=True))
+        queryset = Book.objects.filter(book_id__in=tmp)
+        return queryset

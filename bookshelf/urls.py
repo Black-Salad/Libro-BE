@@ -17,4 +17,5 @@ urlpatterns = [
     path('shelf/join/<int:cnt>', views.BookShelfJoinList.as_view()),
     path('star/join/', views.BookStarJoinList.as_view()),
     path('star/join/<int:cnt>', views.BookStarJoinList.as_view()),
+    path('star/navigate/', views.StarOrderedBooks.as_view()),
 ]
