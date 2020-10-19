@@ -8,3 +8,5 @@
 /bookshelf/__pycache__
 /timeline/__pycache__
 /LibroDjango/__pycache__
+
+/logging.log
