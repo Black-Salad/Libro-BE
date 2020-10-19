@@ -11,6 +11,13 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from django.core.mail import EmailMessage
+from rest_framework.pagination import PageNumberPagination
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 12
+    page_query_param = 'page_size'
+    max_page_size = 100
 
 
 class UserList(generics.ListCreateAPIView):
@@ -18,6 +25,18 @@ class UserList(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_email', 'user_state', 'user_name']
+
+
+class RecommentUserList(generics.ListAPIView):  # 팔로우 추천 (로그인유저가 팔로우하고 있지 않은 대상)
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        user = self.request.query_params.get('user', None)
+        target_users = list(Follow.objects.filter(user_id=user).values_list(
+            'target_user_id', flat=True))
+        queryset = User.objects.exclude(user_id__in=target_users).exclude(user_id=user).filter(
+            user_state=True).order_by('-user_crea_date')[:8]
+        return queryset
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -43,6 +62,7 @@ class UserUpdate(generics.RetrieveUpdateDestroyAPIView):
 class FollowList(generics.ListCreateAPIView):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
+    pagination_class = StandardResultsSetPagination
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_id', 'target_user_id']
 
@@ -55,6 +75,7 @@ class FollowDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserFollowJoinList(generics.ListCreateAPIView):
     queryset = Follow.objects.all()
     serializer_class = UserFollowJoinSerializer
+    pagination_class = StandardResultsSetPagination
     filter_backends = [filter.DjangoFilterBackend]
     filter_fields = ['user_id', 'target_user_id']
 

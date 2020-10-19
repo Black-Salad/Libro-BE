@@ -13,5 +13,6 @@ urlpatterns = [
     path('alarm/', views.AlarmList.as_view()),
     path('alarm/<int:pk>/', views.AlarmDetail.as_view()),
     path('alarm/join/', views.UserAlarmJoinList.as_view()),
-    path('password/', views.PasswordFind.as_view())
+    path('password/', views.PasswordFind.as_view()),
+    path('recommend/', views.RecommentUserList.as_view())
 ]
