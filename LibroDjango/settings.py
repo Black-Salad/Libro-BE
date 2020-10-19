@@ -90,9 +90,11 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '1234',
         'HOST': '127.0.0.1',
-        'PORT': '3307',
+        'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+            'use_unicode': True,
         }
     }
 }
@@ -150,3 +152,49 @@ EMAIL_HOST_PASSWORD = 'libro1020@'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# 로그 보기
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+#             'datefmt': "%d/%b/%Y %H:%M:%S"
+#         },
+#         'simple': {
+#             'format': '%(levelname)s %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': 'logging.log',        # message가 저장될 파일명(파일명 변경 가능)
+#             'formatter': 'verbose'
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'propagate': True,
+#             'level': 'DEBUG',
+#         },
+#         'note': {                   # Project에서 생성한 app의 이름
+#             'handlers': ['file'],          # 다른 app을 생성 후 해당 app에서도
+#             'level': 'DEBUG',          # 사용하고자 할 경우 해당 app 이름으로
+#         },                                      # 좌측 코드를 추가 작성해서 사용
+#         'user': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#         },
+#         'bookshelf': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#         },
+#         'timeline': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#         },
+#     }
+# }
