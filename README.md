@@ -1,3 +1,5 @@
+# Libro
+
 독서 기록 관리 및 공유 플랫폼
 
-BE: Django Rest Framework
+- BE: Django Rest Framework
